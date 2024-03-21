@@ -1,0 +1,26 @@
+﻿@page "/"
+@using System.Security.Claims
+
+<PageTitle>Home</PageTitle>
+
+<br><br><br>
+
+
+<AuthorizeView>
+    <Authorized>
+        @context.User.Identity.AuthenticationType
+        <ul>
+            @foreach (var item in context.User.Claims)
+            {
+                <li>@item.Type => @item.Value</li>
+            }
+        </ul>
+
+        <img src="@context.User.Claims.FirstOrDefault(x => x.Type == "picture")?.Value"/>
+        <br>
+        <a href="authentication/logout">Sair</a>
+    </Authorized>
+    <NotAuthorized>
+        <a href="authentication/login">Log in</a>
+    </NotAuthorized>
+</AuthorizeView>
